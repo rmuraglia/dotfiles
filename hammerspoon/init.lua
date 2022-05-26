@@ -218,7 +218,7 @@ function calAlert(duration)
   }, idx, idx + numDigits - 1)
 
   for _, screen in pairs(screens) do
-    hs.alert(calFmt, screen, duration)
+    hs.alert(calFmt, {atScreenEdge=1}, screen, duration)
   end
 end
 
@@ -229,7 +229,7 @@ hs.hotkey.bind(lcag, 'I', function()
   batteryAlert('forever')
   volumeAlert('forever')
   -- networkAlert()
-  btAlerts('forever')
+  -- btAlerts('forever')
 end,
 dismissAlert)
 
