@@ -2,18 +2,6 @@
 -- GENERAL/PREAMBLE
 ------------
 
--- todo:
--- emojis: https://aldur.github.io/articles/hammerspoon-emojis/
--- gcal menu bar or alert
--- slack alert (any unread): https://github.com/chriszarate/SlackNotifier.spoon
--- throw between spaces instead of displays
--- be aware of different monitor layouts (e.g. work vs home): https://gist.github.com/philc/ed70ae4e60062c2d494fae97d5da43ce#file-init-lua-L170
--- hs.window.find('Meet') can be used to identify the window with a google meet currently going. then draw border depending on microphone/camera status?
--- chrome pop out window: https://superuser.com/questions/182720/keyboard-shortcut-to-pull-google-chrome-tab-into-its-own-window#:~:text=Just%20press%20Cmd%2FCtrl%20%2B%20L%20and%20then%20Shift%20%2B%20Enter%20.
--- replace frame with fullFrame if hiding menubar?
-
--- move between spaces: https://stackoverflow.com/questions/46818712/using-hammerspoon-and-the-spaces-module-to-move-window-to-new-space
-
 lcag = {'cmd', 'alt', 'ctrl'}
 hyper = {'shift', 'cmd', 'alt', 'ctrl'}
 
@@ -31,7 +19,6 @@ function dump(o)
   end
 end
 
--- myPython = '/Users/rmuraglia/anaconda3/bin/python '
 myPython = '/usr/local/bin/python3 '
 myHome = os.getenv('HOME')
 
@@ -105,38 +92,6 @@ function getPowerStyle(remainingPrc, isCharging)
   end
 
   return style
-end
-
--- get bluetooth info as a table
--- note: currently not working due to python and yaml issues on new computer
-function getBtInfo()
-  local sep = '\n'
-  local btBlob = hs.execute(myPython .. myHome .. '/.hammerspoon/Spoons/check_bluetooth.py')
-  local btDevices = {}
-  for m in string.gmatch(btBlob, '([^' .. sep .. ']+)') do
-    table.insert(btDevices, m)
-  end
-  if #btDevices == 0 then
-    table.insert(btDevices, 'No bluetooth devices connected')
-  end
-  return btDevices
-end
-
--- bluetooth device alerts
--- bt power currently doesn't work, try https://apple.stackexchange.com/questions/215256/check-the-battery-level-of-connected-bluetooth-headphones-from-the-command-line
--- https://apple.stackexchange.com/questions/328091/airpods-battery-level-with-ioreg alternate solution with plist maybe
--- https://gist.github.com/miyagawa/ed22215692e1937ab4bc
--- annoyingly doesn't seem like headphone report to the cli? it might be that the key for the headphones is different ugh
--- or this wtf https://www.hammerspoon.org/docs/hs.battery.html#privateBluetoothBatteryInfo can get name and battery from here instead of python snippet
-function btAlerts(duration)
-  local btDevices = getBtInfo()
-  for _, btDevice in pairs(btDevices) do
-    local batteryLevel = tonumber(string.match(btDevice, '%((%d+)%%%)'))
-    local powStyle = getPowerStyle(batteryLevel, nil)
-    for _, screen in pairs(screens) do
-      hs.alert.show(btDevice, powStyle, screen, duration)
-    end
-  end
 end
 
 -- battery power level alert
@@ -367,45 +322,12 @@ hs.hotkey.bind(hyper, 'J', snapWindow(67, 'right'))
 hs.hotkey.bind(lcag, 'J', snapWindow(34, 'center'))
 hs.hotkey.bind(lcag, 'K', snapWindow(100, 'center'))
 
--- test scroll wheel
-hs.hotkey.bind(lcag, 'B', function() hs.eventtap.scrollWheel({0, 10}, {}) end)
-
--- test emoji picker. this works but may be an older method of doing it.
+------------
+-- EMOJI PICKER
+------------
 -- source: https://aldur.github.io/articles/hammerspoon-emojis/
--- try using the Spoon as shown in his currrent config
--- Build the list of emojis to be displayed.
--- local choices = {}
--- for _, emoji in ipairs(hs.json.decode(io.open("emojis/emojis.json"):read())) do
---     table.insert(choices,
---         {text=emoji['name'],
---             subText=table.concat(emoji['kwds'], ", "),
---             image=hs.image.imageFromPath("emojis/" .. emoji['id'] .. ".png"),
---             chars=emoji['chars']
---         })
--- end
-
--- -- Focus the last used window.
--- local function focusLastFocused()
---     local wf = hs.window.filter
---     local lastFocused = wf.defaultCurrentSpace:getWindows(wf.sortByFocusedLast)
---     if #lastFocused > 0 then lastFocused[1]:focus() end
--- end
-
--- -- Create the chooser.
--- -- On selection, copy the emoji and type it into the focused application.
--- local chooser = hs.chooser.new(function(choice)
---     if not choice then focusLastFocused(); return end
---     hs.pasteboard.setContents(choice["chars"])
---     focusLastFocused()
---     hs.eventtap.keyStrokes(hs.pasteboard.getContents())
--- end)
-
--- chooser:searchSubText(true)
--- chooser:choices(choices)
-
--- hs.hotkey.bind({"cmd", "alt"}, "E", function() chooser:show() end)
-
 -- get spoon from https://github.com/Hammerspoon/Spoons/blob/master/Spoons/Emojis.spoon.zip
+
 hs.loadSpoon('Emojis')
 
 spoon.Emojis:bindHotkeys({toggle = {{"cmd", "alt"}, 'e'}})
