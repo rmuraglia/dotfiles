@@ -117,6 +117,37 @@ function volumeAlert(duration)
   end
 end
 
+-- bluetooth devices alert
+function btAlert(duration)
+  -- nb: this is not robust at all and has barely been tested
+  local btDevices = hs.battery.privateBluetoothBatteryInfo()
+
+  if #btDevices == 0 then
+    table.insert(btDevices, 'No bluetooth devices connected')
+  end
+
+  for _, btDevice in pairs(btDevices) do
+    local deviceName = btDevice['name']
+    local isApple = btDevice['isApple']
+    local batterySingle = tonumber(btDevice['batteryPercentSingle'])
+    -- local batteryLeft = tonumber(btDevice['batteryPercentLeft'])
+    -- local batteryRight = tonumber(btDevice['batteryPercentRight'])
+
+    if isApple == 'YES' then
+      powStyle = getPowerStyle(batterySingle, nil)
+      btStr = deviceName .. ': ' .. batterySingle .. '%'
+    else
+      -- even though sony headphones do report battery % in the menubar, it isn't exposed through this api :/
+      powStyle = {}
+      btStr = deviceName ~= nil and deviceName or btDevice
+    end
+
+    for _, screen in pairs(screens) do
+      hs.alert.show(btStr, powStyle, screen, duration)
+    end
+  end
+end
+
 -- date alert
 function dateAlert(duration)
   for _, screen in pairs(screens) do
@@ -184,9 +215,8 @@ hs.hotkey.bind(lcag, 'I', function()
   batteryAlert('forever')
   volumeAlert('forever')
   -- networkAlert()
-  -- btAlerts('forever')
-end,
-dismissAlert)
+  btAlert('forever')
+end)
 
 ------------
 -- WINDOW MANAGEMENT
@@ -344,8 +374,8 @@ local deferred = false
 overrideOtherMouseDown = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(e)
     -- print("down")
     local pressedMouseButton = e:getProperty(hs.eventtap.event.properties['mouseEventButtonNumber'])
-    if scrollMouseButton == pressedMouseButton 
-        then 
+    if scrollMouseButton == pressedMouseButton
+        then
             deferred = true
             return true
         end
@@ -354,8 +384,8 @@ end)
 overrideOtherMouseUp = hs.eventtap.new({ hs.eventtap.event.types.otherMouseUp }, function(e)
     -- print("up")
     local pressedMouseButton = e:getProperty(hs.eventtap.event.properties['mouseEventButtonNumber'])
-    if scrollMouseButton == pressedMouseButton 
-        then 
+    if scrollMouseButton == pressedMouseButton
+        then
             if (deferred) then
                 overrideOtherMouseDown:stop()
                 overrideOtherMouseUp:stop()
@@ -375,20 +405,20 @@ local scrollmult = -4   -- negative multiplier scrolls in same direction as your
 dragOtherToScroll = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDragged }, function(e)
     local pressedMouseButton = e:getProperty(hs.eventtap.event.properties['mouseEventButtonNumber'])
     -- print ("pressed mouse " .. pressedMouseButton)
-    if scrollMouseButton == pressedMouseButton 
-        then 
+    if scrollMouseButton == pressedMouseButton
+        then
             -- print("scroll");
             deferred = false
-            oldmousepos = hs.mouse.getAbsolutePosition()    
+            oldmousepos = hs.mouse.getAbsolutePosition()
             local dx = e:getProperty(hs.eventtap.event.properties['mouseEventDeltaX'])
             local dy = e:getProperty(hs.eventtap.event.properties['mouseEventDeltaY'])
             local scroll = hs.eventtap.event.newScrollEvent({dx * scrollmult, dy * scrollmult},{},'pixel')
             -- put the mouse back
             hs.mouse.setAbsolutePosition(oldmousepos)
             return true, {scroll}
-        else 
+        else
             return false, {}
-        end 
+        end
 end)
 
 overrideOtherMouseDown:start()
