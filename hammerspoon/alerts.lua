@@ -70,14 +70,14 @@ function calAlert(duration)
     local calClean, numDigits = string.gsub(calTrim, string.char(95, 8), '')
     local idx, _ = string.find(calTrim, '_')  -- find index of current (underscored) day
   
-    local calNoFmt = hs.styledtext.new(calClean, {
+    local calNoFmt = hs.styledtext.new('\n' .. calClean, {
         font={name='Monaco', size=27},
         color=hs.drawing.color.hammerspoon['white']
     })  -- make it monospace
     local calFmt = calNoFmt:setStyle({
         color=hs.drawing.color.hammerspoon['osx_red'],
         backgroundColor=hs.drawing.color.hammerspoon['white']
-    }, idx, idx + numDigits - 1)  -- highlight the current day
+    }, idx + 1, idx + numDigits)  -- highlight the current day
   
     for _, screen in pairs(screens) do
         hs.alert(calFmt, {atScreenEdge=1}, screen, duration)
