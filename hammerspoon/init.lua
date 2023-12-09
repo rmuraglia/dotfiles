@@ -16,10 +16,11 @@ screens = hs.screen.allScreens()
 
 -- hs params for configuring behavior
 displayLayout = 'tarmak1'
+useSecrets = false
 showDate = true
 showVol = true
 showBatt = false
-showCal = false
+showCal = true
 showBT = true
 
 -- imports
@@ -28,7 +29,7 @@ require('alerts')
 require('bluetooth')
 if #displayLayout > 0 then require('tarmak') end
 -- require('window_management')  -- simpler to use rectangle for this
-require('secrets')
+if useSecrets then require('secrets') end
 
 -- convenience function for printing objects
 -- https://stackoverflow.com/a/27028488
@@ -100,7 +101,7 @@ end, dismissAlert)
 --     ret, _, _, _ = hs.execute(echoString)
 --     hs.eventtap.keyStrokes(ret)
 -- end
-hs.hotkey.bind({'cmd', 'alt'}, 'v', mdPaste)
+if useSecrets then hs.hotkey.bind({'cmd', 'alt'}, 'v', mdPaste) end
 
 -- emoji picker
 -- source: https://aldur.pages.dev/articles/2016/12/19/hammerspoon-emojis
