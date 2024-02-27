@@ -28,7 +28,7 @@ hs.loadSpoon('Emojis')
 require('alerts')
 require('bluetooth')
 if #displayLayout > 0 then require('tarmak') end
--- require('window_management')  -- simpler to use rectangle for this
+require('window_management')  -- generally simpler to use rectangle for most of this
 if useSecrets then require('secrets') end
 
 -- convenience function for printing objects
@@ -106,6 +106,10 @@ if useSecrets then hs.hotkey.bind({'cmd', 'alt'}, 'v', mdPaste) end
 -- emoji picker
 -- source: https://aldur.pages.dev/articles/2016/12/19/hammerspoon-emojis
 spoon.Emojis:bindHotkeys({toggle = {{"cmd", "alt"}, 'e'}})
+
+-- warp cursor location to previous/next display
+hs.hotkey.bind(hyper, 'l', function() warpCursor('left') end)
+hs.hotkey.bind(hyper, 'r', function() warpCursor('right') end)
 
 -- quick app selection
 -- source: https://kawamurakazushi.com/20200503-Hammerspoon-to-improve-Developer-Experience/

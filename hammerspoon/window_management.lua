@@ -119,3 +119,15 @@ end
 -- hs.hotkey.bind(lcag, '1', focusToDisplay(1, 'left'))
 -- hs.hotkey.bind(lcag, '2', focusToDisplay(2, 'left'))
 -- hs.hotkey.bind(lcag, '3', focusToDisplay(3, 'left'))
+
+-- just moving the mouse cursor, but not transfering focus
+-- combine this with opt cmd X from warpd
+function warpCursor(direction)
+  if direction == 'left' then
+    rect = hs.mouse.getCurrentScreen():toWest():fullFrame()
+  else
+    rect = hs.mouse.getCurrentScreen():toEast():fullFrame()
+  end
+  local center = hs.geometry.rectMidPoint(rect)
+  hs.mouse.absolutePosition(center)
+end
