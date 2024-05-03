@@ -1,0 +1,98 @@
+" General appearance and behavior
+filetype plugin indent on  " turn on filetype detection and plugins and indentation rules based on the filetype
+syntax enable    " enable syntax highlighting
+set number       " show line numbers
+set list         " show line endings and explicit tabs
+set wrap         " enable text wrap
+set whichwrap+=<,>,[,]  " left/right arrows wrap to the prev/next line
+set linebreak    " try to break lines at word boundaries
+set scrolloff=3  " always have at least 3 lines +/- around the cursor when scrolling
+set colorcolumn=80,120  " rulers at 80 and 120
+highlight ColorColumn ctermbg=60 " make the ruler color more subtle https://redd.it/t8hwsy
+
+" search related
+set hlsearch    " highlight matches
+set incsearch   " incremental search
+set ignorecase  " case-insensitive search
+set smartcase   " except when the pattern contains upper case letters
+
+" indentation
+set expandtab  " insert spaces instead of tabs
+set smarttab
+set smartindent
+set autoindent
+set shiftround
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+" other
+set wildmenu
+set wildmode=longest,list,full
+
+" disable vim-native backup stuff
+set nobackup
+set nowritebackup
+set noswapfile
+
+" lightline plugin: https://github.com/itchyny/lightline.vim
+set laststatus=2
+set noshowmode
+
+" show git branch name in lightlint status bar using https://github.com/itchyny/vim-gitbranch
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name'
+      \ },
+      \ }
+
+" set the whitespace highlight color to be less aggressive
+highlight ExtraWhitespace ctermbg=98
+
+" indent guides settings
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=235
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=238
+
+" use actual tabs in makefiles? I'm honestly not even sure anymore
+autocmd FileType make setlocal noexpandtab softtabstop=0
+
+" do the least vimmy thing and rebind in readline shorcuts for use in insert mode, so vim is effectively not a modal editor anymore lol
+" apparently not that cursed -- this sort of exists as the vim-rsi plugin
+" Note that any keybind that should be <M-*> is instead <Esc>* because of my iterm setting for Profiles > Keys > Option key is Esc+
+" for normal, visual etc modes (see :help map-table)
+noremap <Esc><Left> <Esc>b
+noremap <Esc><Right> <Esc>e
+noremap <C-a> <Esc>^
+noremap <C-e> <Esc>$
+noremap <Esc><BS> <Esc>db
+noremap <Esc><Del> <Esc>de
+noremap <C-u> <Esc>d^
+noremap <C-k> <Esc>d$
+
+" for insert mode, be sure to re-enter insert modes after
+inoremap <Esc><Left> <Esc>bi
+inoremap <Esc><Right> <Esc>ea
+inoremap <C-a> <Esc>I
+inoremap <C-e> <Esc>A
+inoremap <Esc><BS> <Esc>dbi
+inoremap <Esc><Del> <Esc>dei
+inoremap <C-u> <Esc>d^i
+inoremap <C-k> <Esc>d$a
+
+" for command mode
+cnoremap <Esc><Left> <Esc>b
+cnoremap <Esc><Right> <Esc>e
+cnoremap <C-a> <Esc>^
+cnoremap <C-e> <Esc>$
+cnoremap <Esc><BS> <Esc>db
+cnoremap <Esc><Del> <Esc>de
+cnoremap <C-u> <Esc>d^
+cnoremap <C-k> <Esc>d$
+

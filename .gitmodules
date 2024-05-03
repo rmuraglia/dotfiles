@@ -1,0 +1,21 @@
+[submodule "vim/pack/plugins/start/gitgutter"]
+	path = vim/pack/plugins/start/gitgutter
+	url = https://github.com/airblade/vim-gitgutter.git
+[submodule "vim/pack/plugins/start/lightline"]
+	path = vim/pack/plugins/start/lightline
+	url = https://github.com/itchyny/lightline.vim.git
+[submodule "vim/pack/plugins/start/vim-cool"]
+	path = vim/pack/plugins/start/vim-cool
+	url = https://github.com/romainl/vim-cool.git
+[submodule "vim/pack/plugins/start/gitbranch"]
+	path = vim/pack/plugins/start/gitbranch
+	url = https://github.com/itchyny/vim-gitbranch.git
+[submodule "vim/pack/plugins/start/better-whitespace"]
+	path = vim/pack/plugins/start/better-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace.git
+[submodule "vim/pack/plugins/start/indent-guides"]
+	path = vim/pack/plugins/start/indent-guides
+	url = https://github.com/preservim/vim-indent-guides.git
+[submodule "vim/pack/plugins/start/auto-pairs"]
+	path = vim/pack/plugins/start/auto-pairs
+	url = https://github.com/jiangmiao/auto-pairs.git
