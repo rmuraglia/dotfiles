@@ -86,13 +86,7 @@ inoremap <Esc><Del> <Esc>dei
 inoremap <C-u> <Esc>d^i
 inoremap <C-k> <Esc>d$a
 
-" for command mode
-cnoremap <Esc><Left> <Esc>b
-cnoremap <Esc><Right> <Esc>e
-cnoremap <C-a> <Esc>^
-cnoremap <C-e> <Esc>$
-cnoremap <Esc><BS> <Esc>db
-cnoremap <Esc><Del> <Esc>de
-cnoremap <C-u> <Esc>d^
-cnoremap <C-k> <Esc>d$
-
+" for command mode see :h cmdline-editing
+cnoremap <Esc><Left> <C-Left>
+cnoremap <Esc><Right> <C-Right>
+cnoremap <C-a> <C-b>
