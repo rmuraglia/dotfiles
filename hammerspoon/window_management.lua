@@ -20,7 +20,7 @@ function snapWindow(size, position)
       local f = win:frame()
       local screen = win:screen()
       local max = screen:frame()  -- this gives (x, y) of bottom left corner with (width, height)
-  
+
       if size == 100 then
         f = hs.layout.maximized:fromUnitRect(max)
       elseif size == 50 then
@@ -45,7 +45,7 @@ function snapWindow(size, position)
     end
 end
 
--- sample usages 
+-- sample usages
 -- hs.hotkey.bind({'ctrl', 'alt'}, 'left', snapWindow(33, 'left'))
 -- hs.hotkey.bind({'alt', 'cmd'}, 'left', snapWindow(50, 'left'))
 -- ...
@@ -108,14 +108,37 @@ function focusDisplay(screen, clickType)
       hs.eventtap.keyStroke({}, 'ESCAPE')  -- or right click and immediately dismiss context menu
     end
 end
-  
+
 function focusToDisplay(idx, clickType)
     return function()
       local screen = screens[idx]
       focusDisplay(screen, clickType)
     end
 end
-  
+
 -- hs.hotkey.bind(lcag, '1', focusToDisplay(1, 'left'))
 -- hs.hotkey.bind(lcag, '2', focusToDisplay(2, 'left'))
 -- hs.hotkey.bind(lcag, '3', focusToDisplay(3, 'left'))
+
+-- just moving the mouse cursor, but not transfering focus
+-- combine this with opt cmd X from warpd
+function warpCursor(direction)
+  if direction == 'left' then
+    rect = hs.mouse.getCurrentScreen():toWest():fullFrame()
+  else
+    rect = hs.mouse.getCurrentScreen():toEast():fullFrame()
+  end
+  local center = hs.geometry.rectMidPoint(rect)
+  hs.mouse.absolutePosition(center)
+end
+
+-- try to set "warp spots" in a given display, like the centers of a 3x3 grid
+function warpGrid(horizontal, vertical)
+    local mults = {left=0.25, center=0.50, right=0.75, top=0.25, bottom=0.75}
+    local rect = hs.mouse.getCurrentScreen():fullFrame()
+    local warpPoint = hs.geometry.point(
+        rect.x + rect.w * mults[horizontal],
+        rect.y + rect.h * mults[vertical]
+    )
+    hs.mouse.absolutePosition(warpPoint)
+end

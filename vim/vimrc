@@ -60,6 +60,9 @@ let g:indent_guides_auto_colors = 0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=235
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=238
 
+" auto-pairs settings
+let g:AutoPairsMapSpace = 0
+
 " use actual tabs in makefiles? I'm honestly not even sure anymore
 autocmd FileType make setlocal noexpandtab softtabstop=0
 

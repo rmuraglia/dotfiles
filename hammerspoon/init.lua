@@ -1,6 +1,11 @@
 myHome = os.getenv('HOME')
 hyper = {'shift', 'cmd', 'alt', 'ctrl'}
 
+-- find homebrew
+-- necessary because the installation path changed between intel and m1 macs: https://apple.stackexchange.com/q/437618
+brewPrefix, _, _, _ = hs.execute('/opt/homebrew/bin/brew --prefix || /usr/local/bin/brew --prefix')
+brewPath = string.gsub(brewPrefix, '%s', '') .. '/bin/'
+
 -- screen objects setup
 -- TODO: screen ordering
 screens = hs.screen.allScreens()
@@ -15,21 +20,22 @@ screens = hs.screen.allScreens()
 -- end
 
 -- hs params for configuring behavior
-displayLayout = 'tarmak1'
-useSecrets = false
+displayLayout = 'colemak-dhm'
+useSecrets = true
 showDate = true
 showVol = true
-showBatt = false
+showBatt = true
 showCal = true
 showBT = true
+useEmojis = false
 
 -- imports
-hs.loadSpoon('Emojis')
 require('alerts')
 require('bluetooth')
 if #displayLayout > 0 then require('tarmak') end
--- require('window_management')  -- simpler to use rectangle for this
+require('window_management')  -- simpler to use rectangle for this
 if useSecrets then require('secrets') end
+if useEmojis then hs.loadSpoon('Emojis') end
 
 -- convenience function for printing objects
 -- https://stackoverflow.com/a/27028488
@@ -83,29 +89,15 @@ hs.hotkey.bind({}, 'f4', function()
     if #displayLayout > 0 then showLayout(alt_layouts[displayLayout], 'forever') end
 end, dismissAlert)
 
---  markdown paste: take a string, and if it matches some pattern (e.g. ticket ID), then format it as a markdown link with the appropriate URL prefix
--- sample similar function (actual function in secrets):
--- function mdPaste()
---     local copiedText = hs.pasteboard.getContents()
-
---     local urlPrefix = 'https://tracking-website.com/'
---     local matchPattern = 'PROJ%a+-%d+'
---     local matchResult = string.match(copiedText, matchPattern)
-
---     if  matchResult ~= nil then
---         echoString = 'echo "[' .. matchResult .. '](' .. urlPrefix .. matchResult .. ')"'
---     else
---         return
---     end
-
---     ret, _, _, _ = hs.execute(echoString)
---     hs.eventtap.keyStrokes(ret)
--- end
-if useSecrets then hs.hotkey.bind({'cmd', 'alt'}, 'v', mdPaste) end
+if useSecrets then hs.hotkey.bind({'cmd', 'alt'}, 'v', superPaste) end
 
 -- emoji picker
 -- source: https://aldur.pages.dev/articles/2016/12/19/hammerspoon-emojis
-spoon.Emojis:bindHotkeys({toggle = {{"cmd", "alt"}, 'e'}})
+if useEmojis then spoon.Emojis:bindHotkeys({toggle = {{"cmd", "alt"}, 'e'}}) end
+
+-- warp cursor location to previous/next display
+hs.hotkey.bind(hyper, 'l', function() warpCursor('left') end)
+hs.hotkey.bind(hyper, 'r', function() warpCursor('right') end)
 
 -- quick app selection
 -- source: https://kawamurakazushi.com/20200503-Hammerspoon-to-improve-Developer-Experience/
@@ -116,7 +108,7 @@ local apps = {
     { key = "v", app = "iterm" },
     { key = "b", app = "obsidian" }
   }
-  
+
 for i, object in ipairs(apps) do
     hs.hotkey.bind(hyper, object.key, function()
         hs.application.launchOrFocus(object.app)

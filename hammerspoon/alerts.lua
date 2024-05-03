@@ -63,24 +63,29 @@ function batteryAlert(duration)
 end
 
 -- calendar with current day highlighted
+-- note: a mac update apparently broke this.
+-- I previously leveraged the fact that the calendar's highlight was parsed in hs as surrounded by underscores
+-- this is no longer the case, so the current day highlighting is broken for now
 function calAlert(duration)
     local calRaw = hs.execute('cal -3')  -- for current month +/- one month
     local calTrim = string.gsub(calRaw, '[^%d]+$', '')  -- each underscore here is actually an underscore + backspace (check with s:byte which yields 95 and 8)
-  
+
     local calClean, numDigits = string.gsub(calTrim, string.char(95, 8), '')
     local idx, _ = string.find(calTrim, '_')  -- find index of current (underscored) day
-  
-    local calNoFmt = hs.styledtext.new('\n' .. calClean, {
+
+    local calNoFmt = hs.styledtext.new('\n' .. calClean, {  -- add a newline in the beginning to compensate for the notches on new macbooks
         font={name='Monaco', size=27},
         color=hs.drawing.color.hammerspoon['white']
     })  -- make it monospace
-    local calFmt = calNoFmt:setStyle({
-        color=hs.drawing.color.hammerspoon['osx_red'],
-        backgroundColor=hs.drawing.color.hammerspoon['white']
-    }, idx + 1, idx + numDigits)  -- highlight the current day
-  
+
+    -- local calFmt = calNoFmt:setStyle({
+    --     color=hs.drawing.color.hammerspoon['osx_red'],
+    --     backgroundColor=hs.drawing.color.hammerspoon['white']
+    -- }, idx + 1, idx + numDigits)  -- highlight the current day
+
     for _, screen in pairs(screens) do
-        hs.alert(calFmt, {atScreenEdge=1}, screen, duration)
+        -- hs.alert(calFmt, {atScreenEdge=1}, screen, duration)
+        hs.alert(calNoFmt, {atScreenEdge=1}, screen, duration)
     end
 end
 
@@ -99,7 +104,7 @@ function scorePing(object, message, seqnum, error)
         style.strokeColor = hs.drawing.color.hammerspoon['osx_red']
         style.strokeWidth = CONSTANTS.strokeWidth
       end
-  
+
       for _, screen in pairs(screens) do
         hs.alert(vpnMsg, style, screen, CONSTANTS.displayTime)
       end
@@ -110,7 +115,7 @@ function networkAlert()
     -- text based on VPN connectivity
     local vpnRetCode = os.execute('/opt/cisco/anyconnect/bin/vpn status | grep Connected')  -- true or nil
     vpnMsg = vpnRetCode and 'VPN: Connected' or 'Not connected to VPN'
-  
+
     -- color alert border based on ping
     hs.network.ping.ping("8.8.8.8", CONSTANTS.pingCount, CONSTANTS.pingInterval, CONSTANTS.pingTimeout, "any", scorePing)
 end
