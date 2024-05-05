@@ -3,7 +3,7 @@
 things to be synced:
 
 - [x] vimrc
-- [ ] hammerspoon
+- [x] hammerspoon
 - [ ] ipython
 - [ ] pyenv
 - [ ] gitconfig

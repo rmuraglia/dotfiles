@@ -31,7 +31,7 @@ Some useful resources and notes I referred to and cross-referenced while putting
     - [indent guides](https://github.com/preservim/vim-indent-guides): visual markers for indentation levels
     - [better whitespace](https://github.com/ntpeters/vim-better-whitespace) to highlight trailing whitespace characters
     - [fugitive](https://github.com/tpope/vim-fugitive) is a super popular way to get git integration but a) I'm not that hardcore about my vim usage, and b) I'm so accustomed to the ohmyzsh git aliases (e.g. `gst` instead of `git status`, that I'd rather do them as a shell comand, like `:!gst`, so overall I don't use this
-        - note to get those ohmyzsh aliases working, I need to symlink my `.zshrc` to `.zshenv`: `ln -s ~/.zshrc ~/.zshenv`
+        - note to get those ohmyzsh aliases working, I need to symlink my `.zshrc` to `.zshenv`, or otherwise reload that omz plugin (and yes, it had to be `.zshenv` -- `.zprofile` was not enough)
     - others I heard mentioned and sounded interesting but that I didn't look into much (usually decided I wasn't enough of a power user to warrant them)
         - nerd tree + nerdtree git plugin
         - vim multiple cursors
