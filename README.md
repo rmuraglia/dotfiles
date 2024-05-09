@@ -5,9 +5,9 @@ things to be synced:
 - [x] vimrc
 - [x] hammerspoon
 - [ ] ipython
-- [ ] pyenv
+- [x] pyenv
 - [ ] gitconfig
-- [ ] zsh (rc, profile, env, custom stuff)
+- [x] zsh (rc, profile, env, custom stuff)
 - [ ] vscode
 - [ ] long tail
     - [ ] iterm

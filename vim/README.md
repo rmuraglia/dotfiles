@@ -37,3 +37,4 @@ Some useful resources and notes I referred to and cross-referenced while putting
         - vim multiple cursors
         - vim surround
         - endwise, vim closer (smarter auto matching for control flow or bracket pairs instead of auto-pairs)
+        - vim slime as a repl

@@ -1,0 +1,19 @@
+# for vivid ls colors as of 2024-05-08
+alias ls="gls --color"
+export LS_COLORS="$(vivid generate snazzy)"
+
+# manually source the theme here if leaving the omz ecosystem?
+
+# for pyenv as of 2024-05-08
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# search for hidden files with wildcard expansion
+setopt GLOB_DOTS
+
+# disable a zsh shorcut for transposing words
+# source: https://unix.stackexchange.com/q/285208$
+bindkey -r "^[T"
+bindkey -r "^[t"

@@ -15,6 +15,7 @@ set hlsearch    " highlight matches
 set incsearch   " incremental search
 set ignorecase  " case-insensitive search
 set smartcase   " except when the pattern contains upper case letters
+highlight Search ctermbg=blue  " highlight searches as blue (easier to see the cursor for the current selected match
 
 " indentation
 set expandtab  " insert spaces instead of tabs
