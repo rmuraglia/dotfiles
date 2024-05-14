@@ -99,6 +99,17 @@ if useEmojis then spoon.Emojis:bindHotkeys({toggle = {{"cmd", "alt"}, 'e'}}) end
 hs.hotkey.bind(hyper, 'l', function() warpCursor('left') end)
 hs.hotkey.bind(hyper, 'r', function() warpCursor('right') end)
 
+-- warp cursor location to numpad-coded area
+hs.hotkey.bind(hyper, '1', function() warpGrid('left', 'bottom') end)
+hs.hotkey.bind(hyper, '2', function() warpGrid('center', 'bottom') end)
+hs.hotkey.bind(hyper, '3', function() warpGrid('right', 'bottom') end)
+hs.hotkey.bind(hyper, '4', function() warpGrid('left', 'center') end)
+hs.hotkey.bind(hyper, '5', function() warpGrid('center', 'center') end)
+hs.hotkey.bind(hyper, '6', function() warpGrid('right', 'center') end)
+hs.hotkey.bind(hyper, '7', function() warpGrid('left', 'top') end)
+hs.hotkey.bind(hyper, '8', function() warpGrid('center', 'top') end)
+hs.hotkey.bind(hyper, '9', function() warpGrid('right', 'top') end)
+
 -- quick app selection
 -- source: https://kawamurakazushi.com/20200503-Hammerspoon-to-improve-Developer-Experience/
 local apps = {
