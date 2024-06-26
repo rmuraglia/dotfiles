@@ -28,6 +28,7 @@ Some useful resources and notes I referred to and cross-referenced while putting
     - [vim-cool](https://github.com/romainl/vim-cool):  disable search highlighting after done, no need to spam `:noh` anymore
     - [gitgutter](https://github.com/airblade/vim-gitgutter) to quickly see which lines have been modified
     - [auto-pairs](https://github.com/jiangmiao/auto-pairs) to automatically insert the matching closing pair for parens, brackets, etc
+        - I ended up disabling this one because I felt like it could be overly aggressive, especially in deletion
     - [indent guides](https://github.com/preservim/vim-indent-guides): visual markers for indentation levels
     - [better whitespace](https://github.com/ntpeters/vim-better-whitespace) to highlight trailing whitespace characters
     - [fugitive](https://github.com/tpope/vim-fugitive) is a super popular way to get git integration but a) I'm not that hardcore about my vim usage, and b) I'm so accustomed to the ohmyzsh git aliases (e.g. `gst` instead of `git status`, that I'd rather do them as a shell comand, like `:!gst`, so overall I don't use this

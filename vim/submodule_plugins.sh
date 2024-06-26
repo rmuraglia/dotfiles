@@ -9,7 +9,6 @@ declare -A plugins=(
     ['gitbranch']='https://github.com/itchyny/vim-gitbranch.git'
     ['gitgutter']='https://github.com/airblade/vim-gitgutter.git'
     ['vim-cool']='https://github.com/romainl/vim-cool.git'
-    ['auto-pairs']='https://github.com/jiangmiao/auto-pairs.git'
     ['indent-guides']='https://github.com/preservim/vim-indent-guides.git'
     ['better-whitespace']='https://github.com/ntpeters/vim-better-whitespace.git'
 )

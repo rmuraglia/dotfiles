@@ -16,6 +16,3 @@
 [submodule "vim/pack/plugins/start/indent-guides"]
 	path = vim/pack/plugins/start/indent-guides
 	url = https://github.com/preservim/vim-indent-guides.git
-[submodule "vim/pack/plugins/start/auto-pairs"]
-	path = vim/pack/plugins/start/auto-pairs
-	url = https://github.com/jiangmiao/auto-pairs.git
