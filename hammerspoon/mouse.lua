@@ -1,13 +1,10 @@
--- NOTE: archival/reference code, not in use
--- purpose was to backdoor in dragscroll on the OS side, rather than the keyboard side before QMK improved support for it
-
 ------------
 -- MIDDLE CLICK DRAG SCROLL
 ------------
 -- tweaked from: https://superuser.com/a/1351638
 
 -- HANDLE SCROLLING WITH MOUSE BUTTON PRESSED
-local scrollMouseButton = 3
+local scrollMouseButton = 2
 local deferred = false
 
 overrideOtherMouseDown = hs.eventtap.new({ hs.eventtap.event.types.otherMouseDown }, function(e)

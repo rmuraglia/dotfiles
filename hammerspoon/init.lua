@@ -36,6 +36,7 @@ if #displayLayout > 0 then require('tarmak') end
 require('window_management')  -- simpler to use rectangle for this
 if useSecrets then require('secrets') end
 if useEmojis then hs.loadSpoon('Emojis') end
+require('mouse')
 
 -- convenience function for printing objects
 -- https://stackoverflow.com/a/27028488
