@@ -1,3 +1,6 @@
+# install coreutils for gnu ls etc
+brew install coreutils
+
 # install fontawesome for terminal glyphs
 brew tap homebrew/cask-fonts
 brew install font-fontawesome
